@@ -1,0 +1,10 @@
+{
+	"name": "await-widget-skill",
+	"private": true,
+	"scripts": {
+		"test": "tsc --noEmit"
+	},
+	"devDependencies": {
+		"typescript": "^6.0.2"
+	}
+}

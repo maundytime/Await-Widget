@@ -1,0 +1,7 @@
+interface:
+  display_name: "Await Widget"
+  short_description: "Build Await widgets in TSX."
+  default_prompt: "Use $await-widget-skill to create or modify an Await widget."
+
+policy:
+  allow_implicit_invocation: true

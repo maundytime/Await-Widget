@@ -7,7 +7,7 @@ last_updated: "2026-04-26"
 user_invocable: true
 ---
 
-# Await Widget Skill
+# Await Widget
 
 This package is both an installable agent skill and a cloneable widget template. Treat the `.d.ts` files as the public contract.
 

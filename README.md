@@ -6,7 +6,7 @@ Start from templates or from scratch — arrange layouts, try out interactions, 
 
 Await is local-first. Your widgets and data stay with you.
 
-This repository provides the public Await Widget Skill and widget template used to create Await widgets.
+This repository provides the public Await Widget and widget template used to create Await widgets.
 
 ## Links
 
@@ -14,9 +14,9 @@ This repository provides the public Await Widget Skill and widget template used 
 - [Privacy Policy](PRIVACY.md)
 - [Skill Instructions](SKILL.md)
 - [Template Project](assets/)
-- [Feedback](https://github.com/maundytime/Await-Widget-Skill/issues)
+- [Feedback](https://github.com/maundytime/Await-Widget/issues)
 
-## Await Widget Skill
+## Await Widget
 
 This is an installable skill and template repo for AI agents to create Await widgets.
 
@@ -26,13 +26,13 @@ Install via [`npx skills`](https://github.com/vercel-labs/skills), which works a
 
 ```bash
 # Project-scoped (committed with your project, shared with team)
-npx skills add maundytime/Await-Widget-Skill
+npx skills add maundytime/Await-Widget
 
 # User-scoped (available across all your projects)
-npx skills add maundytime/Await-Widget-Skill -g
+npx skills add maundytime/Await-Widget -g
 
 # Install only to a specific agent
-npx skills add maundytime/Await-Widget-Skill -a claude-code -g
+npx skills add maundytime/Await-Widget -a claude-code -g
 ```
 
 Restart your agent after installing.
@@ -44,8 +44,8 @@ See [vercel-labs/skills](https://github.com/vercel-labs/skills) for the full lis
 ## Clone
 
 ```bash
-git clone https://github.com/maundytime/Await-Widget-Skill.git
-cd Await-Widget-Skill
+git clone https://github.com/maundytime/Await-Widget.git
+cd Await-Widget
 cd assets
 npm install
 npm test

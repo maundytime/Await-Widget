@@ -2,7 +2,7 @@
 
 Last updated: April 22, 2026
 
-This policy applies to Await, its widget extension, and the Await Widget Skill.
+This policy applies to Await, its widget extension, and the Await Widget.
 
 ## Summary
 
@@ -77,4 +77,4 @@ This policy may be updated when Await's behavior changes. The date at the top sh
 
 For privacy questions, open an issue at:
 
-https://github.com/maundytime/Await-Widget-Skill/issues
+https://github.com/maundytime/Await-Widget/issues

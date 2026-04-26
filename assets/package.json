@@ -1,5 +1,5 @@
 {
-	"name": "await-widget-skill",
+	"name": "await-widget",
 	"private": true,
 	"scripts": {
 		"test": "tsc --noEmit"

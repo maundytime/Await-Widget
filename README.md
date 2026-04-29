@@ -6,7 +6,7 @@ Start from templates or from scratch — arrange layouts, try out interactions, 
 
 Await is local-first. Your widgets and data stay with you.
 
-This repository provides the public Await Widget and widget template used to create Await widgets.
+This repository provides the Await Widget skill and template used to create iOS widgets.
 
 ## Links
 
@@ -18,26 +18,26 @@ This repository provides the public Await Widget and widget template used to cre
 
 ## Await Widget
 
-This is an installable skill and template repo for AI agents to create Await widgets.
+This is a skill collection repo. It currently contains the `await-widget` skill for AI agents to create Await widgets.
 
 ## Install As A Skill
 
-Install via [`npx skills`](https://github.com/vercel-labs/skills), which works across Claude Code, Codex, Cursor, OpenCode, Gemini CLI, and 40+ other agents.
+Install the `await-widget` skill via [`npx skills`](https://github.com/vercel-labs/skills), which works across Claude Code, Codex, Cursor, OpenCode, Gemini CLI, and 40+ other agents.
 
 ```bash
 # Project-scoped (committed with your project, shared with team)
-npx skills add await-widget/skills
+npx skills add await-widget/skills --skill await-widget
 
 # User-scoped (available across all your projects)
-npx skills add await-widget/skills -g
+npx skills add await-widget/skills --skill await-widget -g
 
 # Install only to a specific agent
-npx skills add await-widget/skills -a claude-code -g
+npx skills add await-widget/skills --skill await-widget -a claude-code -g
 ```
 
 Restart your agent after installing.
 
-The install bundles the widget instructions and template into your agent's skills directory. The skill registers as `await-widget` in your agent's skill list, and widget projects use the published `@await-widget/runtime` package for TypeScript declarations.
+The install bundles `await-widget/SKILL.md` and `await-widget/examples/` into your agent's skills directory. The skill registers as `await-widget`, and widget projects use the published `@await-widget/runtime` package for TypeScript declarations.
 
 See [vercel-labs/skills](https://github.com/vercel-labs/skills) for the full list of supported agents and CLI options.
 
@@ -64,13 +64,11 @@ Configure TypeScript to use the Await JSX runtime and global bridge declarations
 Widget source continues to import components from `await`:
 
 ```tsx
-import { Text, ZStack } from "await";
+import { Text } from "await";
 
 function widget() {
   return (
-    <ZStack>
-      <Text value="Hello, World!" />
-    </ZStack>
+    <Text value="Hello, World!" maxSides background={1}/>
   );
 }
 
@@ -79,7 +77,7 @@ Await.define({
 });
 ```
 
-`@await-widget/runtime` provides the `await` module, `await/jsx-runtime`, global Await bridge APIs such as `Await`, `AwaitStore`, and `AwaitNetwork`, and JSX constraints for Await widgets.
+`@await-widget/runtime` provides TypeScript declarations for the `await` module, global Await bridge APIs such as `Await`, `AwaitStore`, and `AwaitNetwork`, and JSX constraints for Await widgets.
 
 ## Clone
 
@@ -93,11 +91,11 @@ npm test
 ## Use With AI Agent
 
 ```text
-Read `SKILL.md` first and follow it strictly.
+Read `await-widget/SKILL.md` first and follow it strictly.
 Then implement or modify the target widget based on my request.
 ```
 
-`SKILL.md` is the main instruction file for agents in this repo.
+`await-widget/SKILL.md` is the main instruction file for agents in this repo.
 `await-widget/examples/` is the template project root.
 
 ## License

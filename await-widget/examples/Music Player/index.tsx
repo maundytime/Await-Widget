@@ -1,6 +1,8 @@
 import {
 	Button,
 	Circle,
+	Color,
+	FullButton,
 	HStack,
 	Icon,
 	Image,
@@ -18,20 +20,21 @@ const limit = 25;
 const source = 'station';
 // @panel
 const showFavorite = false;
+// @panel {type:'menu',items:['user','discovery','song','artist']}
 const type = 'user';
-const id = '';
+// @panel
+const useTransparent = false;
 
 const artworkSize = 400;
 const musicConfig: AwaitMusicPlayConfig = {
 	// @ts-expect-error limit is OK
-	source, query, id, type, limit,
+	source, query, type, limit,
 };
 const outerPadding = 16;
-const columnGap = 18;
+const columnGap = 16;
 const widgetRadius = 86 / 3;
 const artworkRadius = widgetRadius - outerPadding;
 const smallPadding = 10;
-const largePadding = 16;
 const controlSide = 40;
 
 type EntryData = {nowPlaying: AwaitNowPlayingInfo};
@@ -49,18 +52,20 @@ function SmallWidget({entry}: {
 	entry: WidgetEntry<EntryData>;
 }) {
 	const {nowPlaying} = entry;
+	const isTrans = useTransparent || entry.renderingMode !== 'fullColor';
+	const player = getPlayerInfo(nowPlaying, isTrans);
 	const {width, height} = entry.size;
-	const background = nowPlaying.backgroundColor ?? '24211F';
 	const side = Math.min(width, height) - smallPadding * 2;
 
 	return (
-		<ZStack padding={smallPadding} maxSides background={background}>
+		<ZStack padding={smallPadding} maxSides background={player.background}>
 			<Artwork
 				url={nowPlaying.artworkURL}
 				side={side}
-				background={background}
+				background={player.background}
 				radius={widgetRadius - smallPadding}
 			/>
+			<FullButton audio intent={player.isPlaying ? app.command('next') : app.command('toggle', musicConfig)}/>
 		</ZStack>
 	);
 }
@@ -70,10 +75,11 @@ function MediumWidget({entry}: {
 }) {
 	const {nowPlaying} = entry;
 	const {width, height} = entry.size;
-	const player = getPlayerInfo(nowPlaying);
-	const artworkSide = Math.round(Math.min(height - outerPadding * 2, width * 0.39));
+	const isTrans = useTransparent || entry.renderingMode !== 'fullColor';
+	const player = getPlayerInfo(nowPlaying, isTrans);
+	const artworkSide = Math.round(Math.min(height - outerPadding * 2, width * 0.4));
 	const contentWidth = width - artworkSide - outerPadding * 2 - columnGap;
-	const titleSize = Math.min(28, height * 0.155);
+	const titleSize = Math.min(28, height * 0.15);
 
 	return (
 		<ZStack maxSides background={player.background}>
@@ -90,32 +96,31 @@ function MediumWidget({entry}: {
 					background={player.background}
 					radius={artworkRadius}
 				/>
-				<VStack width={contentWidth} maxHeight alignment='leading' spacing={10}>
-					<TrackText player={player} titleSize={titleSize} artistSize={12} spacing={7}/>
+				<VStack frame={{maxWidth: 'max', maxHeight: 'max', alignment: 'leading'}} alignment='leading' spacing={10}>
+					<TrackText player={player} titleSize={titleSize} artistSize={12} spacing={6}/>
 					<Spacer/>
-					<HStack width={contentWidth} spacing={8} alignment='center'>
-						<Spacer/>
-						<PlayerControls player={player} spacing={6}/>
-					</HStack>
+					<PlayerControls player={player}/>
 				</VStack>
 			</HStack>
 		</ZStack>
 	);
 }
 
-function getPlayerInfo(nowPlaying: AwaitNowPlayingInfo) {
-	const secondary = nowPlaying.secondaryTextColor ?? 'BBAE9D';
-
+function getPlayerInfo(nowPlaying: AwaitNowPlayingInfo, isTrans: boolean) {
+	const	background: Color = isTrans ? '' : nowPlaying.backgroundColor ?? '9';
+	const primary: Color = isTrans ? [1, 1] : nowPlaying.primaryTextColor ?? 1;
+	const secondary: Color = isTrans ? [1, 0.75] : nowPlaying.secondaryTextColor ?? primary;
+	const tertiary: Color = isTrans ? [1, 0.5] : nowPlaying.tertiaryTextColor ?? secondary;
 	return {
-		background: nowPlaying.backgroundColor ?? '24211F',
-		primary: nowPlaying.primaryTextColor ?? 'F6EADA',
+		background,
+		primary,
 		secondary,
-		tertiary: nowPlaying.tertiaryTextColor ?? secondary,
+		tertiary,
 		isPlaying: nowPlaying.state === 'playing',
 		isFavorite: nowPlaying.isFavorite,
-		title: displayText(nowPlaying.title, 'Untitled'),
-		artist: displayText(nowPlaying.artistName, 'Unknown Artist'),
-		album: displayText(nowPlaying.albumTitle, 'Unknown Album').toUpperCase(),
+		title: displayText(nowPlaying.title, 'Song'),
+		artist: displayText(nowPlaying.artistName, 'Artist'),
+		album: displayText(nowPlaying.albumTitle, 'Album').toUpperCase(),
 	};
 }
 
@@ -166,18 +171,18 @@ function TrackText({
 
 function PlayerControls({
 	player,
-	spacing,
 }: {
 	player: PlayerInfo;
-	spacing: number;
-	favorite?: boolean;
 }) {
+	const previous = <ControlButton icon='backward.fill' intent={app.command('previous')} foreground={player.primary} background={player.background}/>;
+	const toggle = <ControlButton icon={player.isPlaying ? 'pause.fill' : 'play.fill'} intent={app.command('toggle', musicConfig)} foreground={player.primary} background={player.background} primary/>;
+	const next = <ControlButton icon='forward.fill' intent={app.command('next')} foreground={player.primary} background={player.background}/>;
+	const favorite = <ControlButton icon={player.isFavorite ? 'heart.fill' : 'heart'} intent={app.command(player.isFavorite ? 'clearRating' : 'favorite')} foreground={player.primary} background={player.background}/>;
+	const spacer = <Spacer/>;
+	const margin = <Spacer width={8}/>;
 	return (
-		<HStack spacing={spacing}>
-			<ControlButton icon='backward.fill' intent={app.command('previous')} foreground={player.primary} background={player.background}/>
-			<ControlButton icon={player.isPlaying ? 'pause.fill' : 'play.fill'} intent={app.command('toggle', musicConfig)} foreground={player.primary} background={player.background} primary/>
-			<ControlButton icon='forward.fill' intent={app.command('next')} foreground={player.primary} background={player.background}/>
-			{showFavorite ? <ControlButton icon={player.isFavorite ? 'heart.fill' : 'heart'} intent={app.command(player.isFavorite ? 'clearRating' : 'favorite')} foreground={player.primary} background={player.background}/> : undefined}
+		<HStack frame={{maxWidth: 'max', alignment: 'trailing'}}>
+			{showFavorite ? [previous, spacer, toggle, spacer, next, spacer, favorite] : [spacer, previous, margin, toggle, margin, next]}
 		</HStack>
 	);
 }
@@ -196,8 +201,8 @@ function Artwork({
 	return (
 		<ZStack sides={side} cornerRadius={radius} clipped>
 			{url === undefined
-				? <Text value='NO COVER' foreground={background} fontSize={12} fontWeight={900} fontDesign='monospaced'/>
-				: <Image url={url} resizable aspectRatio={[1, 'fill']} interpolation='high' sides={side}/>}
+				? <Color value={[1, 0.15]}/>
+				: <Image accented='fullColor' url={url} resizable aspectRatio={[1, 'fill']} sides={side}/>}
 		</ZStack>
 	);
 }
@@ -218,14 +223,23 @@ function ControlButton({
 	return (
 		<Button intent={intent} audio>
 			<ZStack sides={controlSide} fontWeight={700} fontDesign='rounded' fontSize={14}>
-				<Circle
-					fill={foreground}
-					opacity={primary ? 1 : 0.14}
-				/>
-				<Icon
-					value={icon}
-					foreground={primary ? background : foreground}
-				/>
+				{primary
+					? <Circle
+						fill={foreground}
+						reverseMask={<Icon
+							value={icon}
+							foreground={foreground}
+						/>}
+					/>
+					: <Circle
+						fill={foreground}
+						opacity={0.15}
+						overlay={<Icon
+							value={icon}
+							foreground={foreground}
+						/>}
+					/>
+				}
 			</ZStack>
 		</Button>
 	);
@@ -257,4 +271,5 @@ const app = Await.define({
 		command, restart,
 	},
 	widgetFamilies: ['small', 'medium'],
+	autoAccented: false,
 });

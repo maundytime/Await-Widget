@@ -16,8 +16,10 @@ const background = 0.1;
 const foreground = 0.9;
 // @panel {type:'slider',min:1,max:3,step:0.1}
 const fontSizeFactor = 2;
+// @panel {type:'slider',min:0,max:16,step:1}
+const lineSpacing = 0;
 // @panel {type:'slider',min:100,max:800,step:100}
-const fontWeight = 600;
+const fontWeight = 700;
 // @panel
 const withPadding = true;
 // @panel
@@ -27,8 +29,10 @@ const animation: NativeAnimation = {duration: 0.6, type: 'smooth'};
 const pagePadding = {top: 16, horizontal: 16, bottom: 24};
 const padding = withPadding ? 12 : 0;
 const font: Mods = {
+	fontDesign: 'default',
 	fontSize: 32,
 	fontWeight,
+	lineSpacing,
 	minimumScaleFactor: 1 / 32,
 };
 const fontSmall: Mods = {

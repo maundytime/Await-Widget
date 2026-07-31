@@ -7,9 +7,9 @@ description: Develop and review user-authored widgets with Await's public TSX ru
 
 Treat this skill as a routing layer rather than a complete reference.
 
-Combine it with the user's installed `@await-widget/runtime` declarations and the task-specific docs in `docs-source/`. See `docs-source/index.md` for the guides directory, then read only the guide needed for the current task.
+Combine it with the user's installed `@await-widget/runtime` declarations and the task-specific docs in this skill's `docs-source/` directory. Resolve these paths relative to this `SKILL.md` file, not the user's workspace. See `docs-source/index.md` for the guides directory, then read only the guide needed for the current task.
 
-For visual widget work, read `guides/design.md`. When visual references are supplied, read `guides/reference.md` first and complete its visual-primitive inventory. If the user supplies a visual direction without a widget function, keep the function open until the actual-size exploration in `guides/design.md` establishes the visual direction. Read `guides/resources.md` when the motif depends on external assets. After capturing a real preview, read `guides/review.md`: pass its reference-vocabulary gate before locking a reference-led direction, then run the full acceptance workflow after the direction is locked.
+For visual widget work, read `docs-source/guides/design.md`. When visual references are supplied, read `docs-source/guides/reference.md` first and complete its visual-primitive inventory. If the user supplies a visual direction without a widget function, keep the function open until the actual-size exploration in `docs-source/guides/design.md` establishes the visual direction. Read `docs-source/guides/resources.md` when the motif depends on external assets. After capturing a real preview, read `docs-source/guides/review.md`: pass its reference-vocabulary gate before locking a reference-led direction, then run the full acceptance workflow after the direction is locked.
 
 ## Overview
 

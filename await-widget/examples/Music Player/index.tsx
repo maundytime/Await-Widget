@@ -2,7 +2,6 @@ import {
 	Button,
 	Circle,
 	Color,
-	FullButton,
 	HStack,
 	Icon,
 	Image,
@@ -34,7 +33,7 @@ const outerPadding = 16;
 const columnGap = 16;
 const widgetRadius = 86 / 3;
 const artworkRadius = widgetRadius - outerPadding;
-const smallPadding = 10;
+const smallPadding = 12;
 const controlSide = 40;
 
 type EntryData = {nowPlaying: AwaitNowPlayingInfo};
@@ -54,18 +53,43 @@ function SmallWidget({entry}: {
 	const {nowPlaying} = entry;
 	const isTrans = useTransparent || entry.renderingMode !== 'fullColor';
 	const player = getPlayerInfo(nowPlaying, isTrans);
-	const {width, height} = entry.size;
-	const side = Math.min(width, height) - smallPadding * 2;
+	const {height} = entry.size;
+	const artworkHeight = Math.round((height - smallPadding * 2) * 0.5);
+	const titleSize = 12;
 
 	return (
-		<ZStack padding={smallPadding} maxSides background={player.background}>
-			<Artwork
-				url={nowPlaying.artworkURL}
-				side={side}
-				background={player.background}
-				radius={widgetRadius - smallPadding}
-			/>
-			<FullButton audio intent={player.isPlaying ? app.command('next') : app.command('toggle', musicConfig)}/>
+		<ZStack maxSides background={player.background}>
+			<VStack alignment='leading' maxSides padding={smallPadding} spacing={0} buttonStyle='borderless'>
+				<HStack frame={{maxWidth: 'max', alignment: 'top'}} alignment='top'>
+					<Artwork
+						url={nowPlaying.artworkURL}
+						width={artworkHeight}
+						height={artworkHeight}
+						radius={widgetRadius - smallPadding}
+					/>
+					<Spacer/>
+					{showFavorite
+						? <ControlButton
+							icon={player.isFavorite ? 'heart.fill' : 'heart'}
+							intent={app.command(player.isFavorite ? 'clearRating' : 'favorite')}
+							foreground={player.primary}
+							background={player.background}
+						/>
+						: undefined}
+				</HStack>
+				<Spacer height={8}/>
+				<Text
+					value={player.title}
+					frame={{maxWidth: 'max', alignment: 'leading'}}
+					foreground={player.primary}
+					fontSize={titleSize}
+					fontWeight={700}
+					lineLimit={1}
+					minimumScaleFactor={1 / titleSize}
+				/>
+				<Spacer minLength={8}/>
+				<PlayerControls player={player} showsFavorite={false} spread/>
+			</VStack>
 		</ZStack>
 	);
 }
@@ -77,7 +101,7 @@ function MediumWidget({entry}: {
 	const {width, height} = entry.size;
 	const isTrans = useTransparent || entry.renderingMode !== 'fullColor';
 	const player = getPlayerInfo(nowPlaying, isTrans);
-	const artworkSide = Math.round(Math.min(height - outerPadding * 2, width * 0.4));
+	const artworkSide = Math.min(height - outerPadding * 2);
 	const contentWidth = width - artworkSide - outerPadding * 2 - columnGap;
 	const titleSize = Math.min(28, height * 0.15);
 
@@ -92,8 +116,7 @@ function MediumWidget({entry}: {
 			>
 				<Artwork
 					url={nowPlaying.artworkURL}
-					side={artworkSide}
-					background={player.background}
+					width={artworkSide}
 					radius={artworkRadius}
 				/>
 				<VStack frame={{maxWidth: 'max', maxHeight: 'max', alignment: 'leading'}} alignment='leading' spacing={10}>
@@ -171,8 +194,12 @@ function TrackText({
 
 function PlayerControls({
 	player,
+	showsFavorite = showFavorite,
+	spread = false,
 }: {
 	player: PlayerInfo;
+	showsFavorite?: boolean;
+	spread?: boolean;
 }) {
 	const previous = <ControlButton icon='backward.fill' intent={app.command('previous')} foreground={player.primary} background={player.background}/>;
 	const toggle = <ControlButton icon={player.isPlaying ? 'pause.fill' : 'play.fill'} intent={app.command('toggle', musicConfig)} foreground={player.primary} background={player.background} primary/>;
@@ -180,29 +207,35 @@ function PlayerControls({
 	const favorite = <ControlButton icon={player.isFavorite ? 'heart.fill' : 'heart'} intent={app.command(player.isFavorite ? 'clearRating' : 'favorite')} foreground={player.primary} background={player.background}/>;
 	const spacer = <Spacer/>;
 	const margin = <Spacer width={8}/>;
+	const controls = showsFavorite
+		? [previous, spacer, toggle, spacer, next, spacer, favorite]
+		: (spread
+			? [previous, spacer, toggle, spacer, next]
+			: [spacer, previous, margin, toggle, margin, next]);
+
 	return (
 		<HStack frame={{maxWidth: 'max', alignment: 'trailing'}}>
-			{showFavorite ? [previous, spacer, toggle, spacer, next, spacer, favorite] : [spacer, previous, margin, toggle, margin, next]}
+			{controls}
 		</HStack>
 	);
 }
 
 function Artwork({
 	url,
-	side,
-	background,
+	width,
+	height = width,
 	radius,
 }: {
 	url?: string;
-	side: number;
-	background: Color;
+	width: number;
+	height?: number;
 	radius: number;
 }) {
 	return (
-		<ZStack sides={side} cornerRadius={radius} clipped>
+		<ZStack frame={{width, height}} cornerRadius={radius} clipped>
 			{url === undefined
 				? <Color value={[1, 0.15]}/>
-				: <Image accented='fullColor' url={url} resizable aspectRatio={[1, 'fill']} sides={side}/>}
+				: <Image accented='fullColor' url={url} resizable aspectRatio='fill' frame={{width, height}} clipped/>}
 		</ZStack>
 	);
 }

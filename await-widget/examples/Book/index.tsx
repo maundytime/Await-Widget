@@ -6,6 +6,7 @@ import {
 	ZStack,
 	Color,
 	Group,
+	Image,
 } from 'await';
 
 // @panel
@@ -24,17 +25,24 @@ const fontWeight = 700;
 const withPadding = true;
 // @panel
 const useTransparent = false;
+// @panel
+const fontURL = '';
 
 const animation: NativeAnimation = {duration: 0.6, type: 'smooth'};
 const pagePadding = {top: 16, horizontal: 16, bottom: 24};
 const padding = withPadding ? 12 : 0;
-const font: Mods = {
-	fontDesign: 'default',
-	fontSize: 32,
-	fontWeight,
-	lineSpacing,
-	minimumScaleFactor: 1 / 32,
-};
+const font: Mods = fontURL === ''
+	? {
+		fontSize: 32,
+		fontWeight,
+		lineSpacing,
+		minimumScaleFactor: 1 / 32,
+	}
+	: {
+		font: {url: fontURL, size: 32, wght: fontWeight},
+		lineSpacing,
+		minimumScaleFactor: 1 / 32,
+	};
 const fontSmall: Mods = {
 	fontDesign: 'monospaced',
 	fontSize: 10,
@@ -57,6 +65,7 @@ type RawPageData = {
 	dataIndex: number;
 	delta: number;
 	pageSize: number;
+	size: Size;
 };
 
 type Page = {
@@ -68,12 +77,13 @@ type Page = {
 	delta: number;
 };
 
-function pageContent(index: number, text: string, backPageIndex: number) {
+function pageContent(index: number, text: string, backPageIndex: number, size: Size) {
+	const content = <Text foreground={foreground} {...font} value={text} padding={pagePadding} frame={size}/>;
 	return (index <= 0 || index >= backPageIndex)
 		? <Color value={background}/>
 		: <Color
 			value={background}
-			overlay={<Text foreground={foreground} {...font} value={text} padding={pagePadding}/>}
+			overlay={fontURL === '' ? content : <Image>{content}</Image>}
 			overlay_={{
 				alignment: 'bottomTrailing',
 				content: <Text value={`${index}/${backPageIndex - 1}`} {...fontSmall} foreground={[foreground, 0.5]} padding={10}/>,
@@ -81,7 +91,7 @@ function pageContent(index: number, text: string, backPageIndex: number) {
 }
 
 function makePage(data: RawPageData): Page {
-	const {bookSize, pageSize, dataIndex, delta} = data;
+	const {bookSize, pageSize, dataIndex, delta, size} = data;
 	const backPageIndex = Math.ceil(bookSize / pageSize) + 1;
 	const pageIndex = dataIndex >= bookSize + 1 ? backPageIndex : (dataIndex <= 0 ? 0 : Math.ceil(dataIndex / pageSize));
 	const prevIndex = pageIndex - delta;
@@ -89,9 +99,9 @@ function makePage(data: RawPageData): Page {
 	return {
 		backPageIndex,
 		cornerRadius: 86 / 3 - padding,
-		currContent: pageContent(pageIndex, texts[0], backPageIndex),
+		currContent: pageContent(pageIndex, texts[0], backPageIndex, size),
 		pageIndex,
-		prevContent: pageContent(prevIndex, texts[1], backPageIndex),
+		prevContent: pageContent(prevIndex, texts[1], backPageIndex, size),
 		delta,
 	};
 }
@@ -170,7 +180,7 @@ function widgetTimeline(context: TimelineContext): Timeline<EntryData> {
 	const dataIndex = AwaitStore.num('dataIndex');
 	const delta = dataIndex >= bookSize + 1 ? 1 : (dataIndex <= 0 ? -1 : AwaitStore.num('delta', -1));
 	const page = makePage({
-		bookSize, dataIndex, delta, pageSize,
+		bookSize, dataIndex, delta, pageSize, size: pageFrame,
 	});
 	const {pageIndex, backPageIndex} = page;
 	const offset = pageIndex <= 0 ? -pageWidth / 4 : (pageIndex >= backPageIndex ? pageWidth / 4 : 0);

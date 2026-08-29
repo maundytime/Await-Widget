@@ -9,7 +9,7 @@ type EntryData = {
 	index: number;
 };
 
-// @panel {type:'menu',items:[30,60,90,120],title_zh:'自动刷新分钟',title:'Auto Refresh Minutes'}
+// @panel {type:'menu',items:[30,60,90,120],title_zh:'刷新分钟',title:'Refresh Minutes'}
 const changeTime = 60;
 // @panel {type:'menu',items:['fit','fill'],title_zh:'填充模式',title:'Content Mode'}
 const mode = 'fill';

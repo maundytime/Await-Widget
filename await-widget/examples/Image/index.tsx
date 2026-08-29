@@ -1,6 +1,6 @@
 import {ZStack, Image} from 'await';
 
-// @panel
+// @panel {title:'Image URL',title_zh:'图片路径'}
 const url = 'sample.jpg';
 
 function widget() {

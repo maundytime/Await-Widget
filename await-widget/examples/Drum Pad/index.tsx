@@ -8,11 +8,11 @@ import {
 	ZStack,
 } from 'await';
 
-// @panel {type:'slider',min:0,max:1,step:0.05}
+// @panel {type:'slider',min:0,max:1,step:0.05,title:'Foreground',title_zh:'前景'}
 const foreground = 0.1;
-// @panel {type:'slider',min:0,max:1,step:0.05}
+// @panel {type:'slider',min:0,max:1,step:0.05,title:'Background',title_zh:'背景'}
 const background = 0.9;
-// @panel {type:'slider',min:0,max:1,step:0.05}
+// @panel {type:'slider',min:0,max:1,step:0.05,title:'Button Fill',title_zh:'按钮填充'}
 const buttonFill = 0.95;
 
 function widget() {

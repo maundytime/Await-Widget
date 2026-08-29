@@ -11,17 +11,17 @@ import {
 	ZStack,
 } from 'await';
 
-// @panel
+// @panel {title:'Query',title_zh:'关键词'}
 const query = '';
-// @panel {type:'slider',min:1,max:50,step:1}
+// @panel {type:'slider',min:1,max:50,step:1,title:'Query Limit',title_zh:'查询数量'}
 const limit = 25;
-// @panel {type:'menu',items:['song','album','artist','station','playlist']}
+// @panel {type:'menu',items:['song','album','artist','station','playlist'],title:'Mode',title_zh:'模式'}
 const source = 'station';
-// @panel
-const showFavorite = false;
-// @panel {type:'menu',items:['user','discovery','song','artist']}
+// @panel {type:'menu',items:['user','discovery','song','artist'],title:'Submode',title_zh:'子模式'}
 const type = 'user';
-// @panel
+// @panel {title:'Show Favorite',title_zh:'显示收藏'}
+const showFavorite = false;
+// @panel {title:'Use Transparent',title_zh:'启用透明'}
 const useTransparent = false;
 
 const artworkSize = 400;
@@ -266,7 +266,7 @@ async function command(cmd: AwaitMusicPlayerCommand, config?: AwaitMusicPlayConf
 	await AwaitMusic.playerCommand(cmd, config);
 }
 
-// @panel
+// @panel {title:'Restart',title_zh:'重启'}
 async function restart() {
 	await AwaitMusic.playerCommand('start', musicConfig);
 }

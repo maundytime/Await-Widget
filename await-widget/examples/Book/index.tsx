@@ -9,23 +9,23 @@ import {
 	Image,
 } from 'await';
 
-// @panel
+// @panel {title:'Book Path',title_zh:'书籍路径'}
 const bookPath = 'sample.txt';
-// @panel {type:'slider',min:0,max:1,step:0.05}
+// @panel {type:'slider',min:0,max:1,step:0.05,title:'Background',title_zh:'背景'}
 const background = 0.1;
-// @panel {type:'slider',min:0,max:1,step:0.05}
+// @panel {type:'slider',min:0,max:1,step:0.05,title:'Foreground',title_zh:'前景'}
 const foreground = 0.9;
-// @panel {type:'slider',min:1,max:3,step:0.1}
+// @panel {type:'slider',min:1,max:3,step:0.1,title:'Font Scale',title_zh:'字体缩放'}
 const fontSizeFactor = 2;
-// @panel {type:'slider',min:0,max:16,step:1}
+// @panel {type:'slider',min:0,max:16,step:1,title:'Line Spacing',title_zh:'行间距'}
 const lineSpacing = 0;
-// @panel {type:'slider',min:100,max:800,step:100}
+// @panel {type:'slider',min:100,max:800,step:100,title:'Font Weight',title_zh:'字体粗细'}
 const fontWeight = 700;
-// @panel
+// @panel {title:'With Padding',title_zh:'启用边距'}
 const withPadding = true;
-// @panel
+// @panel {title:'Use Transparent',title_zh:'启用透明'}
 const useTransparent = false;
-// @panel
+// @panel {title:'Font URL',title_zh:'字体路径'}
 const fontURL = '';
 
 const animation: NativeAnimation = {duration: 0.6, type: 'smooth'};

@@ -12,10 +12,10 @@
 
 The annotation sits as a leading comment above the declaration:
 ```tsx
-// @panel {type:'slider',min:0,max:10,step:1,title:'Padding'}
+// @panel {type:'slider',min:0,max:10,step:1,title:'Padding',title_zh:'间距'}
 const value = 0;
 ```
-Every annotation can include an optional `title` to override the variable or function name in the panel UI.
+Every annotation can include an optional `title` to override the variable or function name in the panel UI. Use `title_en` and `title_zh` to override it for Await's English and Chinese app languages.
 
 The `type` field (or its absence) selects how the declaration is rendered:
 - **Slider** — `type:'slider'` with a number literal. Requires `min` and `max`; auto-swapped if `max < min`. Optional `step` (positive finite).

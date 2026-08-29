@@ -9,25 +9,25 @@ import {
 	Image,
 } from 'await';
 
-// @panel {type:'slider',min:0,max:4,step:1}
+// @panel {type:'slider',min:0,max:4,step:1,title:'Page Spacing',title_zh:'页片间距'}
 const flipSpacing = 3;
-// @panel {type:'slider',min:1,max:150,step:1}
+// @panel {type:'slider',min:1,max:150,step:1,title:'Font Size',title_zh:'字体大小'}
 const fontSize = 150;
-// @panel {type:'slider',min:300,max:700,step:1}
+// @panel {type:'slider',min:300,max:700,step:1,title:'Font Weight',title_zh:'字体粗细'}
 const fontWeight = 700;
-// @panel {type:'color'}
+// @panel {type:'color',title:'Background',title_zh:'背景'}
 const widgetBackground = '0000';
-// @panel {type:'color'}
+// @panel {type:'color',title:'Page',title_zh:'页片'}
 const background = '19';
-// @panel {type:'color'}
+// @panel {type:'color',title:'Foreground',title_zh:'前景'}
 const foreground = 'e5';
-// @panel
+// @panel {title:'Use Transparent',title_zh:'启用透明'}
 const useTransparent = false;
-// @panel
+// @panel {title:'24 Hour',title_zh:'24 小时制'}
 const use24Hour = false;
-// @panel
+// @panel {title:'Open Clock',title_zh:'打开时钟'}
 const openClock = true;
-// @panel
+// @panel {title:'Font URL',title_zh:'字体路径'}
 const fontURL = '';
 
 const monospacedDigit = true;

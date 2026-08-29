@@ -7,7 +7,7 @@ import {
 	Color,
 } from 'await';
 
-// @panel {type:'menu',items:[30,60,90,120],title_zh:'自动刷新分钟',title:'Auto Refresh Minutes'}
+// @panel {type:'menu',items:[30,60,90,120],title_zh:'刷新分钟',title:'Refresh Minutes'}
 const changeTime = 60;
 // @panel {type:'menu',items:[400,500,600,700,800,900,1000],title_zh:'分辨率',title:'Resolution'}
 const maxPixel = 700;

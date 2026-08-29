@@ -16,11 +16,11 @@ const tone = {
 	buttonForeground: 'FFF7F3',
 };
 
-// @panel {type:'slider',min:5,max:20,step:1}
+// @panel {type:'slider',min:5,max:20,step:1,title:'Duration',title_zh:'时长'}
 const duration = 8;
-// @panel {type:'slider',min:0.5,max:2}
+// @panel {type:'slider',min:0.5,max:2,title:'Font Scale',title_zh:'字体缩放'}
 const fontScale = 1;
-// @panel
+// @panel {title:'Show Title',title_zh:'显示标签'}
 const showLabel = true;
 
 const alarmIdStoreKey = 'alarm';

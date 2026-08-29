@@ -7,7 +7,7 @@ import {
 	Image,
 } from 'await';
 
-// @panel
+// @panel {title:'Title',title_zh:'标题'}
 const title = 'CHECKLIST';
 
 const information = {
@@ -41,27 +41,27 @@ const information = {
 	],
 };
 
-// @panel {type:'slider',min:0,max:4,step:1}
+// @panel {type:'slider',min:0,max:4,step:1,title:'Line Size',title_zh:'线条粗细'}
 const lineSize = 1;
-// @panel {type:'slider',min:1,max:20,step:1}
+// @panel {type:'slider',min:1,max:20,step:1,title:'Font Size',title_zh:'字体大小'}
 const fontSize = 12;
-// @panel {type:'slider',min:100,max:900,step:100}
+// @panel {type:'slider',min:100,max:900,step:100,title:'Font Weight',title_zh:'字体粗细'}
 const fontWeight = 700;
-// @panel {type:'menu',items:['monospaced','rounded','serif','default']}
+// @panel {type:'menu',items:['monospaced','rounded','serif','default'],title:'Font Design',title_zh:'字体风格'}
 const fontDesign = 'default';
-// @panel
+// @panel {title:'Show Title',title_zh:'显示标题'}
 const showTitle = true;
-// @panel {type:'menu',items:['weekly','daily']}
+// @panel {type:'menu',items:['weekly','daily'],title:'Reset Period',title_zh:'重置周期'}
 const resetPeriod = 'weekly';
-// @panel {type:'slider',min:8,max:24,step:1}
+// @panel {type:'slider',min:8,max:24,step:1,title:'Padding',title_zh:'内边距'}
 const padding = 12;
-// @panel {type:'color'}
+// @panel {type:'color',title:'Paper Color',title_zh:'纸张颜色'}
 const paper = 'f9d3e0';
-// @panel {type:'color'}
+// @panel {type:'color',title:'Ink Color',title_zh:'墨水颜色'}
 const ink = 'e63b7a';
-// @panel {type:'color'}
+// @panel {type:'color',title:'Marker Color',title_zh:'标记颜色'}
 const marker = 'feb43f80';
-// @panel
+// @panel {title:'Image URL',title_zh:'图片路径'}
 const image = '';
 
 const smallFont: Mods = {

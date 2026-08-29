@@ -20,9 +20,9 @@ type EntryData = {
 	calendar: string;
 };
 
-// @panel {type:'slider',min:0.5,max:2}
+// @panel {type:'slider',min:0.5,max:2,title:'Font Scale',title_zh:'字体缩放'}
 const fontScale = 1;
-// @panel
+// @panel {title:'Show Label',title_zh:'显示标签'}
 const showLabel = true;
 
 function widget(entry: WidgetEntry<EntryData>) {

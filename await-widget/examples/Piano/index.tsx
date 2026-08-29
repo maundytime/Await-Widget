@@ -25,7 +25,7 @@ import {
 
 const darkest = 0.05;
 
-// @panel {type:'slider',min:0,max:0.5}
+// @panel {type:'slider',min:0,max:0.5,title:'Chord Separation',title_zh:'和弦分离'}
 const delay = 0;
 
 function widget(entry: WidgetEntry) {

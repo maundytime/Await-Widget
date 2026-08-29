@@ -6,21 +6,21 @@ import {
 	ZStack,
 } from 'await';
 
-// @panel
+// @panel {title:'Button Text',title_zh:'按钮文本'}
 const text = '+1';
-// @panel
+// @panel {title:'Show Background',title_zh:'显示背景'}
 const showBackground = true;
-// @panel {type:'password'}
+// @panel {type:'password',title:'Password',title_zh:'密码'}
 const password = '12345678';
-// @panel {type:'slider',min:8,max:72,step:1}
+// @panel {type:'slider',min:8,max:72,step:1,title:'Font Size',title_zh:'字体大小'}
 const fontSize = 36;
-// @panel {type:'slider',min:100,max:900,step:100}
+// @panel {type:'slider',min:100,max:900,step:100,title:'Font Weight',title_zh:'字体粗细'}
 const fontWeight = 600;
-// @panel {type:'menu',items:['monospaced','rounded','serif','default']}
+// @panel {type:'menu',items:['monospaced','rounded','serif','default'],title:'Font Design',title_zh:'字体风格'}
 const fontDesign = 'default';
-// @panel {type:'color'}
+// @panel {type:'color',title:'Foreground',title_zh:'前景'}
 const foreground = 'ccc';
-// @panel {type:'color'}
+// @panel {type:'color',title:'Background',title_zh:'背景'}
 const background = '333';
 
 function widget({value}: {value: number}) {

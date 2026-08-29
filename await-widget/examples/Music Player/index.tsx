@@ -54,7 +54,7 @@ function SmallWidget({entry}: {
 	const isTrans = useTransparent || entry.renderingMode !== 'fullColor';
 	const player = getPlayerInfo(nowPlaying, isTrans);
 	const {height} = entry.size;
-	const artworkHeight = Math.round((height - smallPadding * 2) * 0.5);
+	const artworkSide = Math.round((height - smallPadding * 2) * 0.5);
 	const titleSize = 12;
 
 	return (
@@ -63,8 +63,7 @@ function SmallWidget({entry}: {
 				<HStack frame={{maxWidth: 'max', alignment: 'top'}} alignment='top'>
 					<Artwork
 						url={nowPlaying.artworkURL}
-						width={artworkHeight}
-						height={artworkHeight}
+						side={artworkSide}
 						radius={widgetRadius - smallPadding}
 					/>
 					<Spacer/>
@@ -98,11 +97,10 @@ function MediumWidget({entry}: {
 	entry: WidgetEntry<EntryData>;
 }) {
 	const {nowPlaying} = entry;
-	const {width, height} = entry.size;
+	const {height} = entry.size;
 	const isTrans = useTransparent || entry.renderingMode !== 'fullColor';
 	const player = getPlayerInfo(nowPlaying, isTrans);
 	const artworkSide = Math.min(height - outerPadding * 2);
-	const contentWidth = width - artworkSide - outerPadding * 2 - columnGap;
 	const titleSize = Math.min(28, height * 0.15);
 
 	return (
@@ -116,7 +114,7 @@ function MediumWidget({entry}: {
 			>
 				<Artwork
 					url={nowPlaying.artworkURL}
-					width={artworkSide}
+					side={artworkSide}
 					radius={artworkRadius}
 				/>
 				<VStack frame={{maxWidth: 'max', maxHeight: 'max', alignment: 'leading'}} alignment='leading' spacing={10}>
@@ -202,7 +200,7 @@ function PlayerControls({
 	spread?: boolean;
 }) {
 	const previous = <ControlButton icon='backward.fill' intent={app.command('previous')} foreground={player.primary} background={player.background}/>;
-	const toggle = <ControlButton icon={player.isPlaying ? 'pause.fill' : 'play.fill'} intent={app.command('toggle', musicConfig)} foreground={player.primary} background={player.background} primary/>;
+	const toggle = <ControlButton icon={player.isPlaying ? 'pause.fill' : 'play.fill'} intent={app.command('toggle', musicConfig)} foreground={player.primary} background={player.background}/>;
 	const next = <ControlButton icon='forward.fill' intent={app.command('next')} foreground={player.primary} background={player.background}/>;
 	const favorite = <ControlButton icon={player.isFavorite ? 'heart.fill' : 'heart'} intent={app.command(player.isFavorite ? 'clearRating' : 'favorite')} foreground={player.primary} background={player.background}/>;
 	const spacer = <Spacer/>;
@@ -222,20 +220,18 @@ function PlayerControls({
 
 function Artwork({
 	url,
-	width,
-	height = width,
+	side,
 	radius,
 }: {
 	url?: string;
-	width: number;
-	height?: number;
+	side: number;
 	radius: number;
 }) {
 	return (
-		<ZStack frame={{width, height}} cornerRadius={radius} clipped>
+		<ZStack sides={side} cornerRadius={radius} clipped>
 			{url === undefined
 				? <Color value={[1, 0.15]}/>
-				: <Image accented='fullColor' url={url} resizable aspectRatio='fill' frame={{width, height}} clipped/>}
+				: <Image accented='fullColor' url={url} resizable aspectRatio='fill' sides={side} clipped/>}
 		</ZStack>
 	);
 }
@@ -244,35 +240,23 @@ function ControlButton({
 	icon,
 	intent,
 	foreground,
-	background,
-	primary = false,
 }: {
 	icon: string;
 	intent: IntentInfo;
 	foreground: Color;
 	background: Color;
-	primary?: boolean;
 }) {
 	return (
 		<Button intent={intent} audio>
 			<ZStack sides={controlSide} fontWeight={700} fontDesign='rounded' fontSize={14}>
-				{primary
-					? <Circle
-						fill={foreground}
-						reverseMask={<Icon
-							value={icon}
-							foreground={foreground}
-						/>}
-					/>
-					: <Circle
-						fill={foreground}
-						opacity={0.15}
-						overlay={<Icon
-							value={icon}
-							foreground={foreground}
-						/>}
-					/>
-				}
+				<Circle
+					fill={foreground}
+					opacity={0.15}
+					overlay={<Icon
+						value={icon}
+						foreground={foreground}
+					/>}
+				/>
 			</ZStack>
 		</Button>
 	);

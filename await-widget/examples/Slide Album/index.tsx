@@ -9,14 +9,16 @@ type EntryData = {
 	index: number;
 };
 
-// @panel {type:'menu',items:[30,60,90,120],title:'自动刷新分钟'}
+// @panel {type:'menu',items:[30,60,90,120],title_zh:'自动刷新分钟',title:'Auto Refresh Minutes'}
 const changeTime = 60;
-// @panel {type:'menu',items:['fit','fill'],title:'填充模式'}
+// @panel {type:'menu',items:['fit','fill'],title_zh:'填充模式',title:'Content Mode'}
 const mode = 'fill';
-// @panel {title:'开启动画'}
+// @panel {title:'开启动画',title_zh:'开启动画',title:'Enable Animation'}
 const withAnimation = true;
-// @panel {type:'slider',min:0,max:2,title:'动画时长',step:0.01}
+// @panel {type:'slider',min:0,max:2,step:0.01,title_zh:'动画时长',title:'Animation Duration'}
 const duration = 0.4;
+// @panel {type:'menu',items:[400,500,600,700,800,900,1000],title_zh:'分辨率',title:'Resolution'}
+const maxPixel = 700;
 
 function widget({size, index}: WidgetEntry<EntryData>) {
 	const files = [...AwaitFile.files('images')].toSorted((a, b) =>
@@ -45,6 +47,7 @@ function widget({size, index}: WidgetEntry<EntryData>) {
 				{images.map((image, i) => (
 					<Image
 						url={`images/${image}`}
+						maxPixel={maxPixel}
 						resizable
 						aspectRatio={mode}
 						frame={size}
@@ -59,6 +62,7 @@ function widget({size, index}: WidgetEntry<EntryData>) {
 		: (
 			<Image
 				url={`images/${images[2]}`}
+				maxPixel={maxPixel}
 				resizable
 				aspectRatio={mode}
 				transition='blurReplace'

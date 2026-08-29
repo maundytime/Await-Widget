@@ -7,8 +7,10 @@ import {
 	Color,
 } from 'await';
 
-// @panel {type:'menu',items:[30,60,90,120],title:'自动刷新分钟'}
+// @panel {type:'menu',items:[30,60,90,120],title_zh:'自动刷新分钟',title:'Auto Refresh Minutes'}
 const changeTime = 60;
+// @panel {type:'menu',items:[400,500,600,700,800,900,1000],title_zh:'分辨率',title:'Resolution'}
+const maxPixel = 700;
 
 const animation: NativeAnimation = {duration: 0.6, type: 'smooth'};
 const withPadding = false;
@@ -35,7 +37,7 @@ type Page = {
 };
 
 function pageContent(image: string) {
-	return <Color overlay={<Image url={image} resizable aspectRatio='fill' accented='fullColor'/>}/>;
+	return <Color overlay={<Image url={image} maxPixel={maxPixel} resizable aspectRatio='fill' accented='fullColor'/>}/>;
 }
 
 function makePage(data: RawPageData): Page {
